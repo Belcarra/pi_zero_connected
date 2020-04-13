@@ -137,7 +137,8 @@ The sample gadget definition setup script is based on belcarra-acm-eem.json.
 ```
 
 ## Windows Setup
-
+Currently this is using the Belcarra IOTdemo driver which supports EEM, ECM, NCM and RNDIS. An RNDIS configuration
+can also be used with the builtin Windows driver.
 
 ## Windows Internet Connection Sharing
 
@@ -150,16 +151,28 @@ The simplest way to connect the Raspberry Pi to the Internet via a Windows syste
 4. Click on Sharing Tab
 5. Enable sharing and select the adapter that will share
 
+## VNC Screen Sharing
 
-## Raspbian Gadget Setup
+To view the Raspbian desktop use one of the free VNC viewers.
+
+The RealVNC viewer works well. [*Download RealVNC*](https://www.realvnc.com/en/connect/download/viewer/windows/)
+
+## Serial Over USB
+
+To use the Serial over USB connection you will need to have a terminal program.
+
+Putty works reasonably well. [*Download Putty*](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html)
+
+
+## Raspbian Gadget Setup Summary
 
 To use the Gadget USB driver with configs setup the following needs to be done
 
-1. add dtoverlay=dwc2 to /boot/config.txt - this gets the correct USB Driver configured
-2. add module-load=dwc2 to cmdline.txt - this gets the dwc2 module loaded
+1. add module-load=dwc2 to cmdline.txt - this gets the dwc2 module loaded
+2. add dtoverlay=dwc2 to /boot/config.txt - this gets the correct USB Driver configured
 3. add libcomposite to /etc/modules - this gets the libcomposite driver loaded
 
-
+The pigadget.sh setup script implements stpes 2 and 3. 
 
 
 
