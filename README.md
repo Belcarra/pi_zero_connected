@@ -4,18 +4,19 @@
 The *Raspberry Pi Zero* can use *Networking over USB* to connect to the Internet via a Windows or Mac OS system.
 This allows for very low cost use of the Pi Zero, effectively the cost othe Pi Zero, SD card and USB cable. 
 
-The use of the Gadget USB Device is not difficult to implement, but is not supported by the
-initial Raspbian install without modification to the ext filesystem created on the SD card which is
+The use of the Gadget USB Device is not difficult to configure, but is not supported by the
+initial Raspbian install without modification to the ext filesystem created on the SD card, and that is
 difficult to do in Windows or Mac OS.
 
-This project implements a preflight boot configuration for Rasberry Pi using Raspbian.
-The goal is to provide enough configuration automatically set up *Networking over USB* using a Gadget Device.
+This project implements a preflight boot setup for Rasberry Pi using Raspbian.
+
+The goal is to automatically set up *Networking over USB* using a Gadget Device.
 This allows a Pi Zero (for example) to be used for headless operation with a network connection
-through a desktop system without having to modify the installation after booting.
+through a desktop system without having to modify the Pi Zero system configuration after booting.
 
 This project uses the same method as the default Raspbian file system resize script
 to install and run a configuration script during the first
-boot. It will install and the systemd service to start the Gadget Device Definition when the system is booted.
+boot. 
 
 This photo shows a Pi Zero connected to a Windows laptop. Note the use of VNC
 to view the desktop, as well as an SSH shell connection and serial port connection
