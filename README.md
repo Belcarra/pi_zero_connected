@@ -1,7 +1,28 @@
-# Pi Gadget Auto Setup
+# Raspberry Pi - PreFlight Setup for Headless USB Networking
 ## Overview
 
-This project implements a pre-first boot configuration for Rasberry Pi using Raspbian.
+Raspberry Pi boards running Raspbian support Networking over USB with the Gadget USB Device support.
+
+For some boards, such as the Pi Zero it can be difficult to configure the correct Gadget Device
+Definition etc without accessing the board after it has booted the first time. The Pi Zero for
+example would require use of a keyboard, mouse and an HDMI monitor to do the configuration changes.
+
+This project implements a method to install and run a configuration script during the first
+boot that will do the Gadget Device Definition. 
+
+After the first boot has completed and the Raspberry Pi has rebooted the Gadget Device will
+be automatically enabled during system boot and the Networking over USB (and possibly other)
+functions enabled and used.
+
+This allows, for example, to use a Raspberry Pi Zero via the network from the Windows or
+Mac OS system it is plugged into.
+
+![Pi Zero Connected][pizconnected]
+
+[pizconnected][/img/IMG_2229.jpg]
+
+
+This project implements a preflight boot configuration for Rasberry Pi using Raspbian.
 The goal is to provide enough configuration to set up *Networking over USB* using a Gadget Device.
 This allows a Pi Zero (for example) to be used for headless operation with a network connection
 through a desktop system.
@@ -109,6 +130,18 @@ The sample gadget definition setup script is based on belcarra-acm-eem.json.
 ```
 
 
+## Windows Internet Connection Sharing
+
+The simplest way to connect the Raspberry Pi to the Internet via a Windows system is to use
+*Internet Connection Sharing* (aka ICS).
+
+1. Open Network Adapter Settings
+2. Find the network adapter for your Internet Connection (Ethernet or WiFi)
+3. Click on that and then click on Properties
+4. Click on Sharing Tab
+5. Enable sharing and select the adapter that will share
+
+
 ## Raspbian Gadget Setup
 
 To use the Gadget USB driver with configs setup the following needs to be done
@@ -123,7 +156,7 @@ To use the Gadget USB driver with configs setup the following needs to be done
 
 ## See also:
 
-[**pigadget**](https://git@github.com:Belcarra/pigadget.git)
-[**gadgetconfig**](https://git@github.com:Belcarra/gadgetconfig.git)
+- [**pigadget**](https://github.com/Belcarra/pigadget)
+- [**gadgetconfig**](https://github.com/Belcarra/gadgetconfig)
 
 
