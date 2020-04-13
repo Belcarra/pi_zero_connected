@@ -1,6 +1,13 @@
 # Raspberry Pi Zero Connected
 ## Overview
 
+The *Raspberry Pi Zero* can use *Networking over USB* to connect to the Internet via a Windows or Mac OS system.
+This allows for very low cost use of the Pi Zero, effectively the cost othe Pi Zero, SD card and USB cable. 
+
+The use of the Gadget USB Device is not difficult to implement, but is not supported by the
+initial Raspbian install without modification to the ext filesystem created on the SD card which is
+difficult to do in Windows or Mac OS.
+
 This project implements a preflight boot configuration for Rasberry Pi using Raspbian.
 The goal is to provide enough configuration to set up *Networking over USB* using a Gadget Device.
 This allows a Pi Zero (for example) to be used for headless operation with a network connection
@@ -19,8 +26,12 @@ This allows, for example, to use a Raspberry Pi Zero via the network from the Wi
 Mac OS system it is plugged into. With the low power requirements of the Pi Zero it can
 be used with a single USB cable providing both networking and power.
 
-![Pi Zero Connected][pizconnected]
-[pizconnected]: /img/IMG_2229.jpg "Pi Zero Connected"
+This photo shows a Pi Zero connected to a Windows laptop. Note the use of VNC
+to view the desktop, as well as an SSH shell connection and serial port connection
+using ACM (aka Serial over USB.)
+
+![alt text](/img/IMG_2229.jpg "Pi Zero Connected")
+
 
 
 ## Strategy
