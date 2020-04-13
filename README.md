@@ -9,22 +9,22 @@ initial Raspbian install without modification to the ext filesystem created on t
 difficult to do in Windows or Mac OS.
 
 This project implements a preflight boot configuration for Rasberry Pi using Raspbian.
-The goal is to provide enough configuration to set up *Networking over USB* using a Gadget Device.
+The goal is to provide enough configuration automatically set up *Networking over USB* using a Gadget Device.
 This allows a Pi Zero (for example) to be used for headless operation with a network connection
-through a desktop system.
+through a desktop system without having to modify the installation after booting.
 
-This project uses a method to install and run a configuration script during the first
-boot that will install the systemd service to start the Gadget Device Definition when the system is booted.
+This project uses the same method as the default Raspbian file system resize script
+to install and run a configuration script during the first
+boot. It will install and the systemd service to start the Gadget Device Definition when the system is booted.
 
 This photo shows a Pi Zero connected to a Windows laptop. Note the use of VNC
 to view the desktop, as well as an SSH shell connection and serial port connection
 using ACM (aka Serial over USB.)
 
-![alt text](/img/IMG_2229.jpg "Pi Zero Connected")
+<img src="/img/IMG_2229.jpg" width=300 >
 
 
-
-## Strategy
+## Implementation Overview
 
 The default installation for Raspbian implements a first-boot mechanism to fix the SSD
 file system size. It does this be running a configuration script on first boot that performs
@@ -34,39 +34,27 @@ call the configuration script) and reboots. On subsequent boots the system runs 
 This project uses the same mechanism. A configuration script is run at first-boot that
 performs specific configuration changes. It then calls the normal first-boot configuration script.
 
-
 Specifically it will:
-- copy in a Gadget Device Definition script 
-- copy in pigadget systemd unit definition file 
-- copy in ttyGS0/ttyGS1 service helper files
-- copy in start/stop scripts 
-- use systemctl to enable ssh, vnc, pigadget and ttyGS0 services.
+- add dtoverlay=dwc2 to /boot/config if not present
+- add licomposite to /etc/modules if not present
+- copy in a Gadget Device Definition script to /etc/pigadget/default.sh
+- copy in pigadget systemd unit definition file to /etc/systemd/system/pigadget.service
+- copy in ttyGS0/ttyGS1 service helper files to /etc/systemd/system/getty@ttyGS[01]/
+- use systemctl to enable ssh, vnc, pigadget and ttyGS0/ttyGS1 services.
 - restore the cmdline.txt file to normal
 - call the standard first boot script to resize the file system
-
-
-## Implmenetation
 
 This assumes a newly created SD card with a Raspbian image. This will have two partions:
 1. boot
 2. extfs
 
 The *boot* partition is formatted as FAT32 and can be modified from Windows or MacOS.
+No changes are required in the extfs partition.
 
-A small zip file and script are copied to the */boot* partition of a newly created SD card.
+A small zip file and script are copied to the */boot* partition of the newly created SD card.
 With a minor change to /boot/cmdline.txt file the script will be used on the first boot of the SD
 card. That will copy unzip the files into the correct locations and then run the standard
 *Raspbian* first time init script to finish the installation.
-
-The *pigadget.sh* script will:
-
-1. unzip the contents of pigadget.zip into the root file system, aka "/"
-2. add dtoverlay=dwc2 to the /boot/config.txt file if not there
-3. add libcomposite to the /etc/modules file if not there
-4. enable the ssh, vnc, pigadget and getty services
-5. restore the cmdline.txt
-6. exec /usr/lib/raspi-config/init_resize.sh
-
 
 ## Install
 1. Image the SD card, e.g. using Raspberry Pi Imager
@@ -75,8 +63,14 @@ The *pigadget.sh* script will:
 
 ## Use
 1. Insert SD Card into Raspberry Pi
-2. Plug in video (if available)
-3. Plug in power
+2. Insert USB cable into USB port and then into Windows or Mac system
+3. From command line ping raspberrypi.local
+
+
+
+## Debugging with monitor
+If you have a monitor and appropriate HDMI cable you can use that to see what is
+happening during the boot.
 
 You should see the following:
 1. Blue screen
@@ -89,6 +83,9 @@ You should see the following:
 6. System boot complete
 
 When it is booted for the second time the network should be available when plugged into Windows or MacOS.
+
+N.B. for more information remove quiet and splash from cmdline.txt (see below)
+
 
 ### Cmdline.txt
 
@@ -138,6 +135,8 @@ The sample gadget definition setup script is based on belcarra-acm-eem.json.
 ```
     gadgetconfig --sh-auto belcarra-acm-eem.json > belcarra-acm-eem.sh
 ```
+
+## Windows Setup
 
 
 ## Windows Internet Connection Sharing
