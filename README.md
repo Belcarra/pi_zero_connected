@@ -13,18 +13,8 @@ The goal is to provide enough configuration to set up *Networking over USB* usin
 This allows a Pi Zero (for example) to be used for headless operation with a network connection
 through a desktop system.
 
-Raspberry Pi boards running Raspbian support Networking over USB with the Gadget USB Device support.
-
-For some boards, such as the *Pi Zero* it can be difficult to configure the correct Gadget Device
-Definition etc without accessing the board after it has booted the first time. The Pi Zero for
-example would require use of a keyboard, mouse and an HDMI monitor to do the configuration changes.
-
-This project implements a method to install and run a configuration script during the first
+This project uses a method to install and run a configuration script during the first
 boot that will install the systemd service to start the Gadget Device Definition when the system is booted.
-
-This allows, for example, to use a Raspberry Pi Zero via the network from the Windows or
-Mac OS system it is plugged into. With the low power requirements of the Pi Zero it can
-be used with a single USB cable providing both networking and power.
 
 This photo shows a Pi Zero connected to a Windows laptop. Note the use of VNC
 to view the desktop, as well as an SSH shell connection and serial port connection
@@ -51,6 +41,8 @@ Specifically it will:
 - copy in ttyGS0/ttyGS1 service helper files
 - copy in start/stop scripts 
 - use systemctl to enable ssh, vnc, pigadget and ttyGS0 services.
+- restore the cmdline.txt file to normal
+- call the standard first boot script to resize the file system
 
 
 ## Implmenetation
