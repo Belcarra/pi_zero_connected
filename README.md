@@ -152,6 +152,13 @@ The simplest way to connect the Raspberry Pi to the Internet via a Windows syste
 4. Click on Sharing Tab
 5. Enable sharing and select the adapter that will share
 
+## MDNS - Multicast DNS
+
+Until recently the best way to get MDNS in Windows was to install [Bonjour from Apple](https://support.apple.com/kb/DL999?locale=en_US)
+
+Recent Windows 10 releases appear to have some MDNS (aka LLMNR) support built-in. 
+
+
 ## VNC Screen Sharing
 
 To view the Raspbian desktop use one of the free VNC viewers.
