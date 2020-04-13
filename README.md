@@ -1,31 +1,38 @@
-# Raspberry Pi - PreFlight Setup for Headless USB Networking
+# Raspberry Pi Zero Connected
 ## Overview
-
-Raspberry Pi boards running Raspbian support Networking over USB with the Gadget USB Device support.
-
-For some boards, such as the Pi Zero it can be difficult to configure the correct Gadget Device
-Definition etc without accessing the board after it has booted the first time. The Pi Zero for
-example would require use of a keyboard, mouse and an HDMI monitor to do the configuration changes.
-
-This project implements a method to install and run a configuration script during the first
-boot that will do the Gadget Device Definition. 
-
-After the first boot has completed and the Raspberry Pi has rebooted the Gadget Device will
-be automatically enabled during system boot and the Networking over USB (and possibly other)
-functions enabled and used.
-
-This allows, for example, to use a Raspberry Pi Zero via the network from the Windows or
-Mac OS system it is plugged into.
-
-![Pi Zero Connected][pizconnected]
-
-[pizconnected][/img/IMG_2229.jpg]
-
 
 This project implements a preflight boot configuration for Rasberry Pi using Raspbian.
 The goal is to provide enough configuration to set up *Networking over USB* using a Gadget Device.
 This allows a Pi Zero (for example) to be used for headless operation with a network connection
 through a desktop system.
+
+Raspberry Pi boards running Raspbian support Networking over USB with the Gadget USB Device support.
+
+For some boards, such as the *Pi Zero* it can be difficult to configure the correct Gadget Device
+Definition etc without accessing the board after it has booted the first time. The Pi Zero for
+example would require use of a keyboard, mouse and an HDMI monitor to do the configuration changes.
+
+This project implements a method to install and run a configuration script during the first
+boot that will install the systemd service to start the Gadget Device Definition when the system is booted.
+
+This allows, for example, to use a Raspberry Pi Zero via the network from the Windows or
+Mac OS system it is plugged into. With the low power requirements of the Pi Zero it can
+be used with a single USB cable providing both networking and power.
+
+![Pi Zero Connected][pizconnected]
+[pizconnected]: /img/IMG_2229.jpg "Pi Zero Connected"
+
+
+## Strategy
+
+The default installation for Raspbian implements a first-boot mechanism to fix the SSD
+file system size. It does this be running a configuration script on first boot that performs
+the necessary changes, changes the boot environment to the normal configuration (i.e. don't
+call the configuration script) and reboots. On subsequent boots the system runs normally.
+
+This project uses the same mechanism. A configuration script is run at first-boot that
+performs specific configuration changes. It then calls the normal first-boot configuration script.
+
 
 Specifically it will:
 - copy in a Gadget Device Definition script 
