@@ -4,16 +4,17 @@
 The *Raspberry Pi Zero* running Raspbian can use *Networking over USB* to connect to the Internet via a Windows or Mac OS system.
 This allows for very low cost use of the a headless Pi Zero, effectively the cost othe Pi Zero, SD card and USB cable. 
 
-The use of the Gadget USB Device is not difficult to configure, but is not normally supported by the
+The use of the Gadget USB Device is not difficult to configure, but Gadget configuration is not normally supported by the
 initial Raspbian install without modification to the ext filesystem created on the SD card, and that is
 difficult to do in Windows or Mac OS.
 
 This project implements a preflight configuration step done via the boot file system
-(which is accessible to Windows and Mac OS) to setup a configuration step that can 
+(which is accessible to Windows and Mac OS) to setup a configuration script that will 
 configure the Gadget Device Definition during the initial (aka first boot) of the 
 Raspbery Pi.
 
 The goal is to automatically set up *Networking over USB* using a Gadget Device.
+
 This allows a Pi Zero (for example) to be used for headless operation with a network connection
 through a desktop system without having to modify the Pi Zero system configuration after booting.
 Additionally a USB Composite configuration is implemented that includes both an networking
@@ -48,8 +49,8 @@ This project uses the same mechanism. A configuration script is run at first-boo
 performs specific configuration changes. It then calls the normal first-boot configuration script.
 
 Specifically it will:
-- add dtoverlay=dwc2 to /boot/config if not present
-- add licomposite to /etc/modules if not present
+- add dtoverlay=dwc2 to /boot/config.txt if not already present
+- add licomposite to /etc/modules if not already present
 - copy in a Gadget Device Definition script to /etc/pigadget/default.sh
 - copy in pigadget systemd unit definition file to /etc/systemd/system/pigadget.service
 - copy in ttyGS0/ttyGS1 service helper files to /etc/systemd/system/getty@ttyGS[01]/
@@ -57,17 +58,23 @@ Specifically it will:
 - restore the cmdline.txt file to normal
 - call the standard first boot script to resize the file system
 
-This assumes a newly created SD card with a Raspbian image. This will have two partions:
+This assumes a newly created SD card with a Raspbian image as created (for example)
+with the *raspberry-pi-imager*. This will have two partions:
 1. boot
 2. extfs
 
 The *boot* partition is formatted as FAT32 and can be easily modified from Windows or Mac OS.
 No changes are required in the extfs partition (which is not easily modified from Windows or Mac OS).
 
-A small zip file and script are copied to the */boot* partition of the newly imaged SD card.
-With a minor change to /boot/cmdline.txt file the script will be used on the first boot of the SD
-card. That will copy unzip the files into the correct locations and then run the standard
-*Raspbian* first time init script to finish the installation.
+A small *zip file* and *script* are copied to the */boot* partition of the newly imaged SD card.
+
+With a minor change to */boot/cmdline.txt* file the script will be used on the first boot of the SD
+card. 
+
+When the Pi is booted the script will unzip the files into the correct locations in the *ext* filesystem
+and then run the standard
+*Raspbian* first time init script to finish the installation. That script normally resizes the ext
+partition to the full size of the SD card and then reboots the Pi.
 
 N.B. This project is compatible with the standard 
 [Raspbian Imager](https://www.raspberrypi.org/blog/raspberry-pi-imager-imaging-utility/)
@@ -338,7 +345,8 @@ The Belcarra ACM-EEM Gadget Device Definition file:
     }
 }
 ```
-The equivalent (but harder to maintain) shell script:
+We use this equivalent (but harder to maintain) shell script so that the Python based
+gadgetconfig tools do not need to be installed:
 ```
 #!/bin/sh
 # Created from belcarra-acm-eem.json
