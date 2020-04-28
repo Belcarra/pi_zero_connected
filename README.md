@@ -33,7 +33,7 @@ using ACM (aka Serial over USB.)
 
 | | |
 | --- | --- |
-|![test](/img/IMG_2229.jpg)|![test](/img/IMG_2229.jpg)|
+|![test](/img/IMG_2229.jpg)||
 
 
 
