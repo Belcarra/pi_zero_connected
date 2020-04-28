@@ -1,13 +1,16 @@
 #!/bin/bash
 #
-# Quick and dirty pre-first boot install of Gadget, enable ssh and vnc
+# Easy pre-flight boot install of Gadget, enable ssh and vnc
 #
-# Modify /boot/cmdline.txt by replacing 
+# 1. Modify /boot/cmdline.txt by replacing 
 #       init=/usr/lib/raspi-config/init_resize.sh
 # with:
 #        modules-load-dwc2 init=/bin/bash -c -- "mount -t proc proc /proc; mount -t sysfs sys /sys; mount /boot; source /boot/pigadget.sh"
 #
-# Add this pigadget.sh and pigadget.zip script to /boot
+# 2. Add this pigadget.sh and pigadget.zip script to /boot
+#
+# 3. Optionally add a different Gadget configuration script to /boot/pigadget-default.sh
+# 
 #
 
 # pigadget.zip contains
@@ -29,7 +32,11 @@
 #   usr/lib/pigadget/pigadget.start
 
 set -x
+# mount /proc, remount root file system as read/write
+mount -t proc proc /proc
 mount / -o remount,rw
+
+# keep systemd happy
 mkdir -p /run/systemd
 
 # unzip pigadget.zip to install pigadget service files
@@ -38,11 +45,16 @@ if [ -s /boot/pigadget.zip ] ; then
     unzip -o /boot/pigadget.zip
 fi
 
-# update config.txt
+# if there is a /boot/pigadget-default.sh file copy it to /etc/pigadget/default.sh
+if [ -s /boot/pigadget-default.sh ] ; then
+    cp pigadget-default.sh /etc/pigadget/default.sh
+fi
+
+# update config.txt - this configures the correct USB Gadget Drivers
 egrep "^dtoverlay=dwc2$" /boot/config.txt || echo "dtoverlay=dwc2" >> /boot/config.txt
 
 # update /etc/modules to install libcomposite
-egrep "^libcomposite$" config.txt || echo libcomposite >> /etc/modules
+egrep "^libcomposite$" /boot/config.txt || echo libcomposite >> /etc/modules
 
 
 # enable ssh, vnc and pigadget
