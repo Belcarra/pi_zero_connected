@@ -5,7 +5,7 @@
 all: pigadget.zip
 
 pigadget.zip:
-	zip -r $@ ./etc ./usr
+	cd pigadget; zip -r ../$@ ./etc ./usr
 
 clean:
 	-rm -f *.zip
