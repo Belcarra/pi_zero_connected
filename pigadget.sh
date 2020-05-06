@@ -31,9 +31,9 @@
 #   usr/lib/pigadget/pigadget.stop
 #   usr/lib/pigadget/pigadget.start
 
-set -x
+# set -x
 # mount /proc, remount root file system as read/write
-mount -t proc proc /proc
+# mount -t proc proc /proc
 mount / -o remount,rw
 
 # keep systemd happy
