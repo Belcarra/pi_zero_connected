@@ -41,7 +41,13 @@ mkdir -p /run/systemd
 
 # unzip pigadget.zip to install pigadget service files
 #
-if [ -s /boot/pigadget.zip ] ; then
+if [ -d /boot/pigadget ] ; then
+    pushd /boot/pigadget
+    cp -var * /
+    popd
+elif [ -s /boot/pigadget.tgz ] ; then
+    tar xvfz /boot/pigadget.tgz
+elif [ -s /boot/pigadget.zip ] ; then
     unzip -o /boot/pigadget.zip
 fi
 
