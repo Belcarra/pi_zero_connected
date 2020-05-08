@@ -27,6 +27,7 @@ echo MODEL: "${MODEL}"
 echo SERIALNUMBER: "${MODEL}"
 echo MANUFACTURER: "${MANUFACTURER}"
 
-/etc/pigadget/default.sh "${MODEL}" "${SERIALNUMBER}" "${MANUFACTURER}"
+export MODEL="${MODEL}" SERIALNUMBER="${SERIALNUMBER}" MANUFACTURER="${MANUFACTURER}" \
+    /etc/pigadget/default.sh 
 
 
