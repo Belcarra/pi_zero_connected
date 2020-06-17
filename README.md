@@ -87,7 +87,7 @@ but not NOOBS.
 
 ### Install notes
 The new Raspian imager is great when it works but has a number of drawbacks. These are minor but there are alternatives.
-####Possible drawbacks
+#### Possible drawbacks
 
 - It won't run on your version of Windows or Linux or MacOS (they've tried to make it multi-platform but not every corner case is covered.
 - It downloads the latest image, unpacks it, and writes it to the SD card in one step. This is fine as long as you always use the latest image, and you have the network bandwidth to download a huge file every time
