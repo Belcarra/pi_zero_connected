@@ -1,1 +1,0 @@
-console=serial0,115200 console=tty1 root=PARTUUID=ea7d04d6-02 rootfstype=ext4 elevator=deadline fsck.repair=yes rootwait plymouth.ignore-serial-consoles modules-load=dwc2
