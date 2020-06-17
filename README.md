@@ -85,6 +85,19 @@ but not NOOBS.
 2. Copy pigadget.sh and pigadget.zip to boot partition
 2. Edit cmdline.txt in the boot partition (see below)
 
+### Install notes
+The new Raspian imager is great when it works but has a number of drawbacks. These are minor but there are alternatives.
+####Possible drawbacks
+
+- It won't run on your version of Windows or Linux or MacOS (they've tried to make it multi-platform but not every corner case is covered.
+- It downloads the latest image, unpacks it, and writes it to the SD card in one step. This is fine as long as you always use the latest image, and you have the network bandwidth to download a huge file every time
+- You need a USB 3.0 or preferably USB 3.1 port on the machine or the process will take literally forever, and the machine may go to sleep while completing the process.
+
+#### Low-level install
+- ZIP files of the RaspOS images are still available. These contain a single IMG file.  If the final IMG file is less than 4 GB in size, then the Windows built-in UNZIP tool can unpack it. Otherwise you'll new the 7zip tool.
+Once you have the IMG file, you can write it to the SD card using the 
+[win32diskimager](https://sourceforge.net/projects/win32diskimager/)
+tool.  With a fast USB port and a cached IMG file, this is far faster than the Imager program.
 ## Use
 1. Insert SD Card into Raspberry Pi
 2. Insert USB cable into USB port and then into Windows or Mac system
