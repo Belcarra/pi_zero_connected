@@ -94,7 +94,9 @@ The new Raspian imager is great when it works but has a number of drawbacks. The
 - You need a USB 3.0 or preferably USB 3.1 port on the machine or the process will take literally forever, and the machine may go to sleep while completing the process.
 
 #### Low-level install
-- ZIP files of the RaspOS images are still available. These contain a single IMG file.  If the final IMG file is less than 4 GB in size, then the Windows built-in UNZIP tool can unpack it. Otherwise you'll new the 7zip tool.
+- ZIP files of the RaspOS images are still available. These contain a single IMG file.  If the final IMG file is less than 4 GB in size, then the Windows built-in UNZIP tool can unpack it. Otherwise you'll new the 
+[7zip](https://7-zip.org/download.html)
+ tool.
 Once you have the IMG file, you can write it to the SD card using the 
 [win32diskimager](https://sourceforge.net/projects/win32diskimager/)
 tool.  With a fast USB port and a cached IMG file, this is far faster than the Imager program.
