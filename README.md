@@ -86,22 +86,27 @@ but not NOOBS.
 2. Edit cmdline.txt in the boot partition (see below)
 
 ### Install notes
-The new Raspian imager is great when it works but has a number of drawbacks. These are minor but there are alternatives.
+The new Raspian imager is great when it works but has a number of drawbacks. 
+If you have already successfully used the Raspian Etcher then this section may not be needed.
+However, there are situations when it either fails to work at all or runs very slowly.  
+In those cases there are alternatives.
+This section considers the particular case of Microsoft Windows users.
 #### Possible drawbacks
 
-- It won't run on your version of Windows or Linux or MacOS (they've tried to make it multi-platform but not every corner case is covered.
-- It downloads the latest image, unpacks it, and writes it to the SD card in one step. This is fine as long as you always use the latest image, and you have the network bandwidth to download a huge file every time
+- It won't run on your version of Windows or Linux or MacOS 
+(they've tried to make it multi-platform but not every corner case is covered).
+- Speed. It downloads the latest image, unpacks it, and writes it to the SD card in one step. This is fine as long as you always use the latest image, and you have the network bandwidth to download a huge file every time. You may want the option to write a cached image instead of imaging a fresh one from Raspian.org
 - You need a USB 3.0 or preferably USB 3.1 port on the machine or the process will take literally forever, and the machine may go to sleep while completing the process.
 
 #### Low-level install
-- ZIP files of the RaspOS images are still available. These contain a single IMG file.  
+- ZIP files of the RaspOS images are still available. These contain a single IMG file.  On the Raspbian site choose the option to download a ZIP file either directly or via a torrent.
 - If the final IMG file is less than 4 GB in size, then the Windows built-in UNZIP tool can unpack it. 
 Otherwise you'll need the 
 [7zip](https://7-zip.org/download.html)
  tool.
-Once you have the IMG file, you can write it to the SD card using the 
+Once you have the IMG file, you can write it to the SD card using the free tool
 [win32diskimager](https://sourceforge.net/projects/win32diskimager/)
-tool.  With a fast USB port and a cached IMG file, this is far faster than the Imager program.
+.  With a fast USB port and a cached IMG file, this is far faster than the Imager program.
 ## Use
 1. Insert SD Card into Raspberry Pi
 2. Insert USB cable into USB port and then into Windows or Mac system
