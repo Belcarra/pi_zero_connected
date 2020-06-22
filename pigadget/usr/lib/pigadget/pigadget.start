@@ -1,0 +1,33 @@
+#!/bin/bash
+# Copyright (c) 2020 stuart.lynne@belcarra.com
+# /usr/lib/gadgetservice/gadget.start
+set -x
+
+touch /tmp/GADGET.START
+
+if [ ! -f /etc/pigadget/default.sh ] ; then
+        echo "/etc/pigadget/default.sh does not exist"
+        exit 1
+fi
+if [ -f /etc/pigadget/manufacturer.txt ] ; then
+        MANUFACTURER="--manufacturer $(cat /etc/gadgetservice/manufacturer.txt)"
+else
+        MANUFACTURER="pigadget"
+fi
+
+for UDC in /sys/kernel/config/usb_gadget/*/UDC
+do
+    echo '' > ${UDC}
+done
+
+MODEL="$(cat /proc/device-tree/model)"
+SERIALNUMBER="$(cat /proc/device-tree/serial-number)"
+
+echo MODEL: "${MODEL}"
+echo SERIALNUMBER: "${MODEL}"
+echo MANUFACTURER: "${MANUFACTURER}"
+
+export MODEL="${MODEL}" SERIALNUMBER="${SERIALNUMBER}" MANUFACTURER="${MANUFACTURER}" \
+    /etc/pigadget/default.sh 
+
+

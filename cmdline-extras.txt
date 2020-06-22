@@ -1,0 +1,1 @@
+modules-load-dwc2 init=/bin/bash -c -- "set -x; mount -t proc proc /proc; mount -t sysfs sys /sys; mount /boot; source /boot/pigadget.sh"

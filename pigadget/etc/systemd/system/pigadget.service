@@ -1,0 +1,26 @@
+# Simple PI Gadget setup
+# The pigadget.start script will run the Gadget ConfigFS script:
+#
+#   /etc/pigadget/default.sh
+#
+# Use gadgetconfig to create the shell script from a Gadget JSON Definition file.
+#
+# To disable (stop from running at boot):
+#
+#   systemctl disable pigadget
+#
+
+[Unit]
+Description=pigadget - start and stop gadget device
+After=network-online.target
+Before=lxd.service
+Requires=network-online.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=/usr/lib/pigadget/pigadget.start
+ExecStop=/usr/lib/pigadget/pigadget.stop
+
+[Install]
+WantedBy=multi-user.target
