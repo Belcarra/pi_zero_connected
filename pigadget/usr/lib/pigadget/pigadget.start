@@ -1,7 +1,7 @@
 #!/bin/bash
 # Copyright (c) 2020 stuart.lynne@belcarra.com
 # /usr/lib/gadgetservice/gadget.start
-set -x
+#set -x
 
 touch /tmp/GADGET.START
 
@@ -20,14 +20,23 @@ do
     echo '' > ${UDC}
 done
 
-MODEL="$(cat /proc/device-tree/model)"
-SERIALNUMBER="$(cat /proc/device-tree/serial-number)"
+function mac() {
+    octet=$1
+    shift
+    printf "%02x:%s:%s:%s:%s:%s:\n" $(("0x$octet" & 0xfe | 0x02)) ${*}
+}
 
-echo MODEL: "${MODEL}"
-echo SERIALNUMBER: "${MODEL}"
+PRODUCT="$(sed -e 's/\(.*\)./\1/' < /proc/device-tree/model)"
+SERIALNUMBER="$(sed -e 's/\(.*\)./\1/' <  /proc/device-tree/serial-number)"
+MD5=$(echo $SERIALNUMBER | md5sum | sed -e 's/\(..\)\(..\)\(..\)\(..\)\(..\)\(..\).*/\1 \2 \3 \4 \5 \6/')
+HOST_ADDR=$(mac $MD5)
+
+echo SERIALNUMBER: "${SERIALNUMBER}"
+echo PRODUCT: "${PRODUCT}"
 echo MANUFACTURER: "${MANUFACTURER}"
+echo MD5: "${MD5}"
+echo HOST_ADDR: "${HOST_ADDR}"
 
-export MODEL="${MODEL}" SERIALNUMBER="${SERIALNUMBER}" MANUFACTURER="${MANUFACTURER}" \
-    /etc/pigadget/default.sh 
+export product="${PRODUCT}" serialnumber="${SERIALNUMBER}" manufacturer="${MANUFACTURER}" host_addr="${HOST_ADDR}" /etc/pigadget/default.sh 
 
 
